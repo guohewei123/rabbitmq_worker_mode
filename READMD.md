@@ -4,7 +4,7 @@ RabbitMQ主要使用场景
 2. 流量消峰
 3. 异步处理
 
-**5种模式的GO 代码实现**： https://github.com/laosuaidami/RabbitMQWorkerMode
+**5种模式的GO 代码实现**： https://github.com/guohewei123/rabbitmq_worker_mode
 
 ## 一. Simple模式
 
@@ -13,7 +13,9 @@ RabbitMQ主要使用场景
 
     ![](.READMD_images/6fd1a73d.png)
 
-
+- Go实现代码：https://github.com/guohewei123/rabbitmq_worker_mode
+  
+  ![](.READMD_images/d1a62791.png)
 
 ## 二. 工作模式
 
@@ -22,11 +24,15 @@ RabbitMQ主要使用场景
   - 轮询模式：每个消费者均分消息
   - 公平分发模式（能者多劳）：按能力分发，处理速度快的分发的多，处理速度慢的分发的少
 
-  ![](.READMD_images/f63a4743.png)
+  
 
 ### 1. 轮询模式
 
 轮询模式无论有多少个消费者，不管每个消费者处理消息的效率，都会将所有消息平均的分发给每一个消费者，也就是说，大家最后各自消费的消息数量都是一样多的。
+
+- Go实现代码：https://github.com/guohewei123/rabbitmq_worker_mode
+
+  ![](.READMD_images/b1688bf4.png)
 
 ### 2. 消息丢失
 - 开启了自动应答，如果消息队列将消息分发给消费者，那么就会从队列中删除，如果在我们处理任务的过程中，处理失败或者服务器宕机，那么这条消息肯定得不到执行，就会出现丢失。
@@ -42,22 +48,37 @@ RabbitMQ主要使用场景
 
   ![](.READMD_images/c1789560.png)
 
+- Go实现代码：https://github.com/guohewei123/rabbitmq_worker_mode
+
+  ![](.READMD_images/80f401cb.png)
+
 ## 三. Publish/Subscribe,  订阅模式
 
 - 消息被路由投递给多个队列，一个消息被多个消费者获取。
 - 相关场景：邮件群发，群聊天，广播 (广告)
 
-![](.READMD_images/e78498b5.png)
+  ![](.READMD_images/e78498b5.png)
+
+- Go实现代码：https://github.com/guohewei123/rabbitmq_worker_mode
+
+  ![](.READMD_images/2ad21b9a.png)
 
 ## 四. Routing, 路由模式
 
 - 一个消息被多个消费者获取。并且消息的目标队列可被生产者指定。
 - 交换机的类型是 direct 类型 在订阅模式下是 faout 广播类型
 
-![](.READMD_images/a30a2eae.png)
+  ![](.READMD_images/a30a2eae.png)
+- Go实现代码：https://github.com/guohewei123/rabbitmq_worker_mode
+
+  ![](.READMD_images/672045ed.png)
 
 ## 五. Topic, 话题模式
 
 - 一个消息被多个消费者获取。消息的目标queue可用BindingKey，以通配符的方式指定。（#：匹配一个或多个词，*：匹配一个词）
 
-![](.READMD_images/e7c08a9f.png)
+  ![](.READMD_images/e7c08a9f.png)
+
+- Go实现代码：https://github.com/guohewei123/rabbitmq_worker_mode
+
+  ![](.READMD_images/ee323d61.png)
